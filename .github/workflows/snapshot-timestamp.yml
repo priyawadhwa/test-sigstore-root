@@ -50,7 +50,9 @@ jobs:
 
       # Snapshot and timestamp    
       - name: build
-        run: go build -o tuf -tags=pivkey ./cmd/tuf/
+        run: |
+          sudo apt-get install libpcsclite-dev
+          go build -o tuf -tags=pivkey ./cmd/tuf/
       - name: snapshot
         run: |
           ./tuf snapshot -repository $REPO
