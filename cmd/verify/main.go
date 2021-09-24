@@ -14,7 +14,7 @@ import (
 	"path/filepath"
 
 	"github.com/asraa/test-sigstore-root/pkg/keys"
-	"github.com/sigstore/root-signing/pkg/repo"
+	"github.com/asraa/test-sigstore-root/pkg/repo"
 	"github.com/theupdateframework/go-tuf"
 	"github.com/theupdateframework/go-tuf/client"
 	"github.com/theupdateframework/go-tuf/data"
