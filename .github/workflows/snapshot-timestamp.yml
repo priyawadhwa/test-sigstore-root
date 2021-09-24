@@ -50,7 +50,7 @@ jobs:
 
       # Snapshot and timestamp    
       - name: build
-        run: go build -o tuf ./cmd/tuf/
+        run: go build -o tuf -tags=pivkey ./cmd/tuf/
       - name: snapshot
         run: |
           ./tuf snapshot -repository $REPO

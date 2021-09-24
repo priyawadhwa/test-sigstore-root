@@ -13,7 +13,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/sigstore/root-signing/pkg/keys"
+	"github.com/asraa/test-sigstore-root/pkg/keys"
 	"github.com/sigstore/root-signing/pkg/repo"
 	"github.com/theupdateframework/go-tuf"
 	"github.com/theupdateframework/go-tuf/client"
