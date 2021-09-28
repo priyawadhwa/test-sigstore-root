@@ -55,14 +55,13 @@ jobs:
       - name: publish
         run: |
           ./tuf publish -repository $REPO
-          ls $REPO
       - name: Upload snapshot and timestamp
         uses: 'actions/upload-artifact@v2'
         with:
           name: snapshot-and-timestamp
           path: | 
-            $REPO/snapshot.json
-            $REPO/timestamp.json
+            $REPO/repository/snapshot.json
+            $REPO/repository/timestamp.json
           retention-days: 5
 
 
