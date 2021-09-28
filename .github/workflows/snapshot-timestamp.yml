@@ -82,4 +82,6 @@ jobs:
           title: Update Snapshot and Timestamp
           body: Sign snapshot and timestamp files
           branch: update-snapshot-timestamp
+          path: repository/repository/
+          signoff: true
            
