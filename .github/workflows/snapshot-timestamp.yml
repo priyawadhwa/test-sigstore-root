@@ -6,18 +6,10 @@ on:
   # Enable cron when repository published with these keys. 
   # schedule:
   #   cron: '0 0 */14 * *' # every 14 days
-  pull_request:
-    branches: [ main ]
-    paths:
-      - 'repository/**'
-  push:
-    branches: [ main ]
-    paths:
-      - 'repository/**'
   workflow_dispatch:
 
 jobs:  
-  validate:
+  snapshot_and_timestamp:
     runs-on: ubuntu-20.04
     permissions:
       id-token: 'write'
@@ -62,3 +54,32 @@ jobs:
           ./tuf sign -repository $REPO -roles timestamp -key ${TIMESTAMP_KEY}
       - name: publish
         run: ./tuf publish -repository $REPO
+      - name: Upload snapshot and timestamp
+        uses: 'actions/upload-artifact@v2'
+        with:
+          name: snapshot-and-timestamp
+          path: | 
+            repository/snapshot.json
+            repository/timestamp.json
+          retention-days: 5
+
+
+  push:
+    needs: snapshot_and_timestamp
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+      - uses: 'actions/download-artifact@v2'
+        with:
+          name: snapshot-and-timestamp
+      # Open pull request changes
+      - name: create pull request
+        uses: 'peter-evans/create-pull-request@v3'
+        with:
+          commit-message: update snapshot and timestamp
+          title: Update Snapshot and Timestamp
+          body: Sign snapshot and timestamp files
+          branch: update-snapshot-timestamp
+           
