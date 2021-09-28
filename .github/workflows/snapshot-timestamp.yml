@@ -55,6 +55,7 @@ jobs:
       - name: publish
         run: |
           ./tuf publish -repository $REPO
+          ls $REPO/repository/
       - name: Upload snapshot and timestamp
         uses: 'actions/upload-artifact@v2'
         with:
