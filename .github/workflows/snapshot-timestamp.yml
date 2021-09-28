@@ -60,9 +60,7 @@ jobs:
         uses: 'actions/upload-artifact@v2'
         with:
           name: snapshot-and-timestamp
-          path: | 
-            $REPO/repository/snapshot.json
-            $REPO/repository/timestamp.json
+          path: repository/repository/
           retention-days: 5
 
 
