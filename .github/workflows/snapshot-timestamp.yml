@@ -59,8 +59,8 @@ jobs:
         with:
           name: snapshot-and-timestamp
           path: | 
-            repository/snapshot.json
-            repository/timestamp.json
+            $REPO/snapshot.json
+            $REPO/timestamp.json
           retention-days: 5
 
 
