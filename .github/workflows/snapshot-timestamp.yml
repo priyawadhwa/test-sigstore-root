@@ -40,9 +40,9 @@ jobs:
           #id_token_include_email: true
       - name: Login
         run: |
-          echo "${{ steps.auth.outputs.id_token }}"
           gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
           gcloud auth list
+          gcloud auth print-identity-token --audiences=fulcio
 
       # Snapshot and timestamp    
       - name: build
