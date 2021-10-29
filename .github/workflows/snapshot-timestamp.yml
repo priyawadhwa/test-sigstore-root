@@ -3,7 +3,7 @@ name: Snapshot and Timestamp
 # Execute this as a biweekly cron job and on changes to repository/ 
 # when new published metadata is submitted.
 on:
-  # Enable cron when repository published with these keys. 
+  # Enable cron when root published with these online keys. 
   # schedule:
   #   cron: '0 0 */14 * *' # every 14 days
   workflow_dispatch:
@@ -21,7 +21,7 @@ jobs:
         run: |
           echo "REPO=$(pwd)/repository/" >> $GITHUB_ENV
           echo "SNAPSHOT_KEY=gcpkms://projects/project-rekor/locations/global/keyRings/sigstore-root/cryptoKeys/snapshot" >> $GITHUB_ENV
-          echo "TIMESTAMP_KEY=gcpkms://projects/project-rekor/locations/global/keyRings/sigstore-root/cryptoKeys/snapshot" >> $GITHUB_ENV
+          echo "TIMESTAMP_KEY=gcpkms://projects/project-rekor/locations/global/keyRings/sigstore-root/cryptoKeys/timestamp" >> $GITHUB_ENV
       - uses: actions/setup-go@v2
         with:
           go-version: 1.17.x
@@ -34,10 +34,10 @@ jobs:
         with:
           token_format: 'access_token'
           workload_identity_provider: 'projects/237800849078/locations/global/workloadIdentityPools/root-signing-pool/providers/sigstore-root'
-          service_account: 'sigstore-root-signing@project-rekor.iam.gserviceaccount.com'
-          create_credentials_file: true
+          service_account: 'sigstore-root-signing@project-rekor.iam.gserviceaccount.com'      
       - name: Login
         run: |
+          echo "${{ steps.auth.outputs.id_token }}
           gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
           gcloud auth list
 
