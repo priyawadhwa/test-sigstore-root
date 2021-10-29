@@ -37,7 +37,6 @@ jobs:
           workload_identity_provider: 'projects/237800849078/locations/global/workloadIdentityPools/root-signing-pool/providers/sigstore-root'
           service_account: 'sigstore-root-signing@project-rekor.iam.gserviceaccount.com'      
           create_credentials_file: true
-          id_token_audience: 'sigstore'
           id_token_include_email: true
       - name: Login
         run: |
