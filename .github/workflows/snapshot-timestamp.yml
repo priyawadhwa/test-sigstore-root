@@ -37,7 +37,7 @@ jobs:
           service_account: 'sigstore-root-signing@project-rekor.iam.gserviceaccount.com'      
       - name: Login
         run: |
-          echo "${{ steps.auth.outputs.id_token }}
+          echo "${{ steps.auth.outputs.id_token }}"
           gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
           gcloud auth list
 
