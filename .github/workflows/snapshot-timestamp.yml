@@ -33,7 +33,7 @@ jobs:
         id: auth
         with:
           token_format: 'id_token'
-          id_token_audience: 'fulcio'
+          id_token_audience: 'sigstore'
           workload_identity_provider: 'projects/237800849078/locations/global/workloadIdentityPools/root-signing-pool/providers/sigstore-root'
           service_account: 'sigstore-root-signing@project-rekor.iam.gserviceaccount.com'      
           # create_credentials_file: true
