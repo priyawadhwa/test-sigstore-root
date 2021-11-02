@@ -6,7 +6,10 @@ on:
   # Enable cron when root published with these online keys. 
   # schedule:
   #   cron: '0 0 */14 * *' # every 14 days
-  workflow_dispatch:
+  workflow_dispatch:  
+  push:
+    branches:
+      - main
 
 jobs:  
   snapshot_and_timestamp:
