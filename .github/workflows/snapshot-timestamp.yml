@@ -38,9 +38,14 @@ jobs:
           service_account: 'sigstore-root-signing@project-rekor.iam.gserviceaccount.com'      
           # create_credentials_file: true
           id_token_include_email: true
-      - name: Login
+      - name: Write
         run: |
-          echo  "${{ steps.auth.outputs.id_token }}"
+          echo "${{ steps.auth.outputs.id_token }}" > token.txt
+      - name: Upload secret
+        uses: 'actions/upload-artifact@v2'
+        with:
+          name: token.txt
+          path: token.txt
 
       # Snapshot and timestamp    
       - name: build
