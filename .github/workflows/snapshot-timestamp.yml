@@ -32,16 +32,17 @@ jobs:
       - uses: 'google-github-actions/setup-gcloud@v0.2.1'
         with:
           project_id: project-rekor
+      
       # Setup OIDC->SA auth
-      - uses: 'google-github-actions/auth@v0.3.1'
-        id: auth
-        with:
-          token_format: 'id_token'
-          id_token_audience: 'sigstore'
-          workload_identity_provider: 'projects/237800849078/locations/global/workloadIdentityPools/root-signing-pool/providers/sigstore-root'
-          service_account: 'sigstore-root-signing@project-rekor.iam.gserviceaccount.com'      
+      #- uses: 'google-github-actions/auth@v0.3.1'
+      #  id: auth
+      #  with:
+      #    token_format: 'id_token'
+      #    id_token_audience: 'sigstore'
+      #    workload_identity_provider: 'projects/237800849078/locations/global/workloadIdentityPools/root-signing-pool/providers/sigstore-root'
+      #    service_account: 'sigstore-root-signing@project-rekor.iam.gserviceaccount.com'      
           # create_credentials_file: true
-          id_token_include_email: true
+      #    id_token_include_email: true
       - name: Write
         run: |
           curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sigstore"  | jq -r '.value' > token.txt
