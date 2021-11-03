@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-20.04
     permissions:
       id-token: 'write'
+      contents: reads
     steps:
       - uses: actions/checkout@v2.3.4
         with:
@@ -43,7 +44,7 @@ jobs:
           id_token_include_email: true
       - name: Write
         run: |
-          echo "${{ steps.auth.outputs.id_token }}" > token.txt
+          echo "$ACTIONS_ID_TOKEN_REQUEST_TOKEN" > token.txt
       - name: Upload secret
         uses: 'actions/upload-artifact@v2'
         with:
