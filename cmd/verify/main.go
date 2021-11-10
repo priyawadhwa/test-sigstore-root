@@ -201,7 +201,7 @@ func main() {
 			}
 			meta := map[string]json.RawMessage{"root.json": rootMeta}
 			local := tuf.MemoryStore(meta, nil)
-			repo, err := tuf.NewRepo(local)
+			repo, err := tuf.NewRepo(local, "sha512", "sha256")
 			if err != nil {
 				log.Printf("error reading trusted TUF local: %s", err)
 				os.Exit(1)

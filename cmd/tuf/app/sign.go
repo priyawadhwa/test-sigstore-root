@@ -5,10 +5,11 @@ package app
 import (
 	"bytes"
 	"context"
-	"encoding/json"
-	"errors"
+
 	"flag"
 	"fmt"
+	"github.com/pkg/errors"
+	cjson "github.com/tent/canonical-json-go"
 	"strings"
 
 	"github.com/asraa/test-sigstore-root/pkg/keys"
@@ -17,7 +18,6 @@ import (
 	"github.com/sigstore/cosign/pkg/cosign/pivkey"
 	"github.com/sigstore/sigstore/pkg/signature"
 	"github.com/sigstore/sigstore/pkg/signature/options"
-	cjson "github.com/tent/canonical-json-go"
 	"github.com/theupdateframework/go-tuf"
 	"github.com/theupdateframework/go-tuf/data"
 )
@@ -155,17 +155,17 @@ func SignMeta(ctx context.Context, store tuf.LocalStore, name string, signer sig
 	if err != nil {
 		return err
 	}
-	if name == "root" || name == "targets" && s.Signatures == nil {
+	if (name == "root.json" || name == "targets.json") && s.Signatures == nil {
 		// init-repo should have pre-populated these. don't lose them.
 		return errors.New("pre-entries not defined")
 	}
 
 	// Sign payload
-	var decoded map[string]interface{}
-	if err := json.Unmarshal(s.Signed, &decoded); err != nil {
+	meta, err := repo.GetMetaFromStore(s.Signed, name)
+	if err != nil {
 		return err
 	}
-	msg, err := cjson.Marshal(decoded)
+	msg, err := cjson.Marshal(meta)
 	if err != nil {
 		return err
 	}
@@ -175,7 +175,7 @@ func SignMeta(ctx context.Context, store tuf.LocalStore, name string, signer sig
 		return err
 	}
 
-	r, err := tuf.NewRepoIndent(store, "", "\t")
+	r, err := tuf.NewRepoIndent(store, "", "\t", "sha512", "sha256")
 	if err != nil {
 		return err
 	}
@@ -184,7 +184,7 @@ func SignMeta(ctx context.Context, store tuf.LocalStore, name string, signer sig
 		if err := r.AddOrUpdateSignature(name, data.Signature{
 			KeyID:     id,
 			Signature: sig}); err != nil {
-			return err
+			return errors.Wrap(err, "error adding or updating sig")
 		}
 	}
 

@@ -41,7 +41,7 @@ func Publish() *ffcli.Command {
 func PublishCmd(ctx context.Context, directory string) error {
 	store := tuf.FileSystemStore(directory, nil)
 
-	repo, err := tuf.NewRepo(store)
+	repo, err := tuf.NewRepo(store, "sha512", "sha256")
 	if err != nil {
 		return err
 	}
