@@ -38,7 +38,8 @@ if [[ ! -z "$1" ]]; then
 fi
 
 ./verify keys --root piv-attestation-ca.pem --key-directory $REPO/keys
-./verify repository --repository $REPO --root $REPO/repository/1.root.json
-
+if [[ -f $REPO/repository ]]; then
+    ./verify repository --repository $REPO --root $REPO/repository/1.root.json
+fi
 # stay on the branch for manual verification
 
