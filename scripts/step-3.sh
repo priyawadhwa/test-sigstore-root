@@ -20,7 +20,7 @@ if [ -z "$REVOCATION_KEY" ]; then
     exit
 fi
 if [ -z "$CEREMONY_DATE" ]; then
-    CEREMONY_DATE=$(date '%Y-%m-%d')
+    CEREMONY_DATE=$(date '+%Y-%m-%d')
 fi
 export REPO=$(pwd)/ceremony/$CEREMONY_DATE
 
@@ -36,7 +36,7 @@ git status
 # Sign the delegations
 ./tuf sign -repository $REPO -roles rekor -key ${REKOR_KEY}
 ./tuf sign -repository $REPO -roles staging -key ${STAGING_KEY}
-./tuf sign -repository $REPO -roles staging -key ${REVOCATION_KEY}
+./tuf sign -repository $REPO -roles revocation -key ${REVOCATION_KEY}
 
 git checkout -b sign-delegations
 git add ceremony/
