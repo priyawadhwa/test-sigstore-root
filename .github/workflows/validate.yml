@@ -36,7 +36,8 @@ jobs:
         run: ./verify repository --repository $GCS_REPO --root $(pwd)/ceremony/2021-06-18/repository/root.json
       - name: verify staged ceremony changes
         run: |
-          CHANGED=$(git diff --name-only HEAD^ HEAD ceremony/ | grep ".*staged.*" | head -1)
+          set -euo pipefail
+          export CHANGED=$(git diff --name-only HEAD^ HEAD ceremony/ | grep ".*staged.*" | head -1)
           echo ${CHANGED}
           if [ -n ${CHANGED} ]; then
             REPO=$(echo $CHANGED | cut -d/ -f 1-2)
