@@ -23,9 +23,9 @@ git remote -v
 # Cleanup branches
 git branch -D setup-root || true
 git branch -D add-key || true
-git branch -D sign-targets || true
+git branch -D sign-root-targets || true
 git branch -D sign-snapshot || true
-git branch -D sign-timestamp || true
+git branch -D sign-delegations || true
 git branch -D publish || true
 
 git clean -d -f
