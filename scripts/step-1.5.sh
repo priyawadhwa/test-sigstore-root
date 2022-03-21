@@ -73,5 +73,8 @@ git commit -s -a -m "Setting up root for ${GITHUB_USER}"
 git push -f origin setup-root
 
 # Open the browser
-open "https://github.com/${GITHUB_USER}/test-sigstore-root/pull/new/setup-root" || xdg-open "https://github.com/${GITHUB_USER}/test-sigstore-root/pull/new/setup-root"
+export GITHUB_URL=$(git remote -v | awk '/^upstream/{print $2}'| head -1 | sed -Ee 's#(git@|git://)#https://#' -e 's@com:@com/@' -e 's#\.git$##')
+export BRANCH=$(git symbolic-ref HEAD | cut -d"/" -f 3,4)
+export PR_URL=${GITHUB_URL}"/compare/main..."${BRANCH}"?expand=1"
+open "${PR_URL}" || xdg-open "${PR_URL}"
 
