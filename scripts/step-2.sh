@@ -21,8 +21,15 @@ git checkout main
 git pull upstream main
 git status
 
+
+# Ask user to insert key 
+read -n1 -r -p -s "Insert your Yubikey, then press any key to continue..." 
+
 # Sign the root and targets with hardware key
 ./tuf sign -repository $REPO -roles root -roles targets -sk
+
+# Ask user to remove key (and replace with SSH security key)
+read -n1 -r -p -s "Remove your Yubikey, then press any key to continue..." 
 
 git checkout -b sign-root-targets
 git add ceremony/
