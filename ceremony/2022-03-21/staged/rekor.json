@@ -1,5 +1,10 @@
 {
-	"signatures": null,
+	"signatures": [
+		{
+			"keyid": "f52fe349ef8e8cc3dd1dd5d6a0a755365a7aa2fba623b0986f447a1b79f99a5f",
+			"sig": "30450221008d5a403061152c696f349198bd5665dbababbcc215fd6e4c90c5302aae9a194f022035d3bcbd3b8be080d5044e25ad6203e1013ac4ab653b97799f4ca39d5d1cb820"
+		}
+	],
 	"signed": {
 		"_type": "targets",
 		"expires": "2022-09-24T15:40:52Z",
