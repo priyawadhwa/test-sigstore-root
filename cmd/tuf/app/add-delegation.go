@@ -142,7 +142,14 @@ func DelegationCmd(ctx context.Context, directory, name, path string, keyRefs ke
 				return fmt.Errorf("error adding targets %w", err)
 			}
 		}
-	}
+	} /* else {
+		// If there are no targets to add to the delegation, then add an empty targets
+		// TODO uncomment this when go-tuf is resolved
+		// https://github.com/theupdateframework/go-tuf/pull/175#discussion_r839607186
+		if err := repo.AddTargetsWithExpiresToPreferredRole([]string{}, nil, expiration, name); err != nil {
+			return fmt.Errorf("error adding targets %w", err)
+		}
+	} */
 
 	if err := repo.SetTargetsVersion(version); err != nil {
 		return err
